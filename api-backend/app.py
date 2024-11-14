@@ -9,15 +9,21 @@ app = Flask(__name__)
 CORS(app)
 
 # Retrieve database credentials from AWS SecretsManager
-def get_secret(secret_name, region_name="us-east-1"):
-    client = boto3.client('secretsmanager', region_name=region_name)
-    response = client.get_secret_value(SecretId=secret_name)
-    secret_data = response['SecretString']
-    return eval(secret_data)  # Assuming the secret data is stored as a dictionary
+# def get_secret(secret_name, region_name="us-east-1"):
+#     client = boto3.client('secretsmanager', region_name=region_name)
+#     response = client.get_secret_value(SecretId=secret_name)
+#     secret_data = response['SecretString']
+#     return eval(secret_data)  # Assuming the secret data is stored as a dictionary
 
 # Database credentials retrieved from AWS SecretsManager
-db_credentials = get_secret('your_secret_name_here')
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_credentials['DB_USERNAME']}:{db_credentials['DB_PASSWORD']}@{db_credentials['DB_ENDPOINT']}/{db_credentials['DB_NAME']}"
+# db_credentials = get_secret('your_secret_name_here')
+# app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_credentials['DB_USERNAME']}:{db_credentials['DB_PASSWORD']}@{db_credentials['DB_ENDPOINT']}/{db_credentials['DB_NAME']}"
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+# Setup with ENV variables
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_ENDPOINT')}/{os.environ.get('DB_NAME')}"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
