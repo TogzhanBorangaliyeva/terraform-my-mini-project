@@ -1,0 +1,36 @@
+# Terraform State Files
+*.tfstate
+*.tfstate.*
+
+# Crash Log Files
+crash.log
+
+# Terraform Plan Files
+*.tfplan
+
+# Terraform Variables Files
+*.tfvars
+*.tfvars.json
+
+# Override Files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Auto-Generated Files
+.terraform/
+.terraform.lock.hcl
+
+# IDE/Editor Specific Files
+.idea/
+*.swp
+*.bak
+*.tmp
+*.sublime-workspace
+*.sublime-project
+.vscode/
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
